@@ -22,7 +22,7 @@ module.exports = function (grunt) {
 
     function _computeFolderFilesList(stylesDir) {
       return fs.readdirSync(baseDir + stylesDir).filter(function (file) {
-        return file.endsWith(".scss")
+        return file.endsWith(".scss");
       }).map(function (file) {
         return stylesDir + file.replace(/\.scss$/, "");
       });
@@ -59,7 +59,7 @@ module.exports = function (grunt) {
                 version: result.map.version,
                 mappings: result.map.mappings,
                 sources: result.map.sources.filter(function (source) {
-                  return source !== "stdin"
+                  return source !== "stdin";
                 }),
                 names: result.map.names,
                 file: _.last(targetFilePref.split("/"))
@@ -70,7 +70,7 @@ module.exports = function (grunt) {
               deferred.reject();
             }
             deferred.resolve();
-          })
+          });
         }
       });
       return deferred.promise;
