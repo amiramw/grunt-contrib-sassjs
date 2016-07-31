@@ -39,8 +39,9 @@ module.exports = function (grunt) {
     });
 
     Q.all(nonPartials.map(function (file) {
+      file = file.replace(/.scss$/, "");
       var deferred = Q.defer();
-      var targetFilePref = targetDir + file;
+      var targetFilePref = targetDir + file.replace(new RegExp("^" + baseDir), "");
       mkdirp(path.dirname(targetFilePref), function (err) {
         if (err) {
           console.error("Sass - error occurred while creating folder: " + err);
