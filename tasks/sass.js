@@ -39,15 +39,14 @@ module.exports = function (grunt) {
     });
 
     Q.all(nonPartials.map(function (file) {
-      file = file.replace(/.scss$/, "");
       var deferred = Q.defer();
-      var targetFilePref = targetDir + file.replace(new RegExp("^" + baseDir), "");
+      var targetFilePref = targetDir + file.replace(/.scss$/, "").replace(new RegExp("^" + baseDir), "");
       mkdirp(path.dirname(targetFilePref), function (err) {
         if (err) {
           console.error("Sass - error occurred while creating folder: " + err);
           deferred.reject();
         } else {
-          Sass.compile("@import \"" + file + "\"", function (result) {
+          Sass.compileFile(file, function (result) {
             try {
               var cssFileName = targetFilePref + ".css";
               console.log("Sass - Writing file " + cssFileName);
