@@ -34,7 +34,7 @@ module.exports = function (grunt) {
     var nonPartials = allSassFiles.filter(function (file) {
       return _.last(file.split("/"))[0] !== "_";
     });
-    allSassFiles.forEach(function (file) {
+    nonPartials.forEach(function (file) {
       Sass.writeFile(file, fs.readFileSync(file, 'utf8'));
     });
 
@@ -43,18 +43,18 @@ module.exports = function (grunt) {
       var targetFilePref = targetDir + file.replace(/.scss$/, "").replace(new RegExp("^" + baseDir), "");
       mkdirp(path.dirname(targetFilePref), function (err) {
         if (err) {
-          console.error("Sass - error occurred while creating folder: " + err);
+          grunt.log.error("Sass - error occurred while creating folder: " + err);
           deferred.reject();
         } else {
           Sass.compileFile(file, function (result) {
             try {
               var cssFileName = targetFilePref + ".css";
-              console.log("Sass - Writing file " + cssFileName);
+              grunt.verbose.writeln("Sass - Writing file " + cssFileName);
               var content = result.text;
-              console.log("Compiled css: " + content.length + " characters");
+              grunt.verbose.writeln("Compiled css: " + content.length + " characters");
               fs.writeFileSync(cssFileName, content, 'utf8');
               var cssMapFileName = targetFilePref + ".css.map";
-              console.log("Sass - Writing file " + cssMapFileName);
+              grunt.verbose.writeln("Sass - Writing file " + cssMapFileName);
               fs.writeFileSync(cssMapFileName, JSON.stringify({
                 version: result.map.version,
                 mappings: result.map.mappings,
@@ -64,7 +64,7 @@ module.exports = function (grunt) {
                 names: result.map.names,
                 file: _.last(targetFilePref.split("/"))
               }), 'utf8');
-              console.log("Sass - Done writing files for " + targetFilePref);
+              grunt.verbose.writeln("Sass - Done writing files for " + targetFilePref);
             } catch (err) {
               console.error("Sass - error occurred: " + err);
               deferred.reject();
@@ -75,7 +75,7 @@ module.exports = function (grunt) {
       });
       return deferred.promise;
     })).then(function () {
-      console.log("Done sass compilation");
+      grunt.verbose.writeln("Done sass compilation");
       done();
     }).done();
   });
