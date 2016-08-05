@@ -1,4 +1,6 @@
-# grunt-sass [![Build Status](https://travis-ci.org/amiramw/grunt-contrib-sassjs.svg?branch=master)](https://travis-ci.org/amiramw/grunt-contrib-sassjs)
+# grunt-sass 
+[![Build Status](https://travis-ci.org/amiramw/grunt-contrib-sassjs.svg?branch=master)](https://travis-ci.org/amiramw/grunt-contrib-sassjs)
+[![npm version](https://badge.fury.io/js/grunt-contrib-sassjs.svg)](http://badge.fury.io/js/grunt-contrib-sassjs)
 
 > Compile Sass to CSS using [sass.js](https://github.com/medialize/sass.js)
 
