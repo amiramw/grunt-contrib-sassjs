@@ -3,8 +3,6 @@
 var Sass = require('sass.js');
 var fs = require('fs');
 var Q = require('q');
-var path = require('path');
-var mkdirp = require('mkdirp');
 
 Sass.options({
 	style: Sass.style.expanded
@@ -20,29 +18,22 @@ module.exports = function (grunt) {
 			var deferred = Q.defer();
 			var src = file.src[0];
 			Sass.writeFile(src, fs.readFileSync(src, 'utf8'));
-			mkdirp(path.dirname(file.dest), function (err) {
-				if (err) {
-					grunt.log.error("Sass - error occurred while creating folder: " + err);
+			Sass.compileFile(src, function (result) {
+				try {
+					var cssFileName = file.dest;
+					grunt.verbose.writeln("Sass - Writing file " + cssFileName);
+					var content = result.text;
+					grunt.verbose.writeln("Compiled css: " + content.length + " characters");
+					grunt.file.write(cssFileName, content);
+					if (options.sourceMap && result.map) {
+						grunt.verbose.writeln("Sass - Writing file " + options.sourceMap);
+						grunt.file.write(options.sourceMap, result.map);
+					}
+				} catch (err) {
+					grunt.log.error("Sass - error occurred: " + err);
 					deferred.reject();
-				} else {
-					Sass.compileFile(src, function (result) {
-						try {
-							var cssFileName = file.dest;
-							grunt.verbose.writeln("Sass - Writing file " + cssFileName);
-							var content = result.text;
-							grunt.verbose.writeln("Compiled css: " + content.length + " characters");
-							grunt.file.write(cssFileName, content);
-							if (options.sourceMap && result.map) {
-								grunt.verbose.writeln("Sass - Writing file " + options.sourceMap);
-								grunt.file.write(options.sourceMap, result.map);
-							}
-						} catch (err) {
-							grunt.log.error("Sass - error occurred: " + err);
-							deferred.reject();
-						}
-						deferred.resolve();
-					});
 				}
+				deferred.resolve();
 			});
 			return deferred.promise;
 		})).then(function () {

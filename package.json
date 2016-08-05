@@ -13,7 +13,6 @@
   },
   "dependencies": {
     "sass.js": "^0.9.11",
-    "mkdirp": "^0.5.1",
     "q": "^1.4.1"
   },
   "devDependencies": {
