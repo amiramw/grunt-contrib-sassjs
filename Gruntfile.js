@@ -20,11 +20,18 @@ module.exports = function (grunt) {
 			tests: ['test/test.js']
 		},
 		sass: {
-			compile: {
+			compileScss: {
 				files: {
-					'test/tmp/fixtures/banner.css': 'test/fixtures/banner.scss',
-					'test/tmp/fixtures/compile.css': 'test/fixtures/compile.scss',
-					'test/tmp/fixtures/imported.css': 'test/fixtures/imported.scss'
+					'test/tmp/scss/banner.css': 'test/scss/banner.scss',
+					'test/tmp/scss/compile.css': 'test/scss/compile.scss',
+					'test/tmp/scss/imported.css': 'test/scss/imported.scss'
+				}
+			},
+			compileSass: {
+				files: {
+					'test/tmp/sass/banner.css': 'test/sass/banner.sass',
+					'test/tmp/sass/compile.css': 'test/sass/compile.sass',
+					'test/tmp/sass/imported.css': 'test/sass/imported.sass'
 				}
 			}
 		}
