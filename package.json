@@ -13,7 +13,6 @@
   },
   "dependencies": {
     "sass.js": "^0.9.11",
-    "lodash": "3.10.1",
     "mkdirp": "^0.5.1",
     "q": "^1.4.1"
   },
@@ -22,7 +21,7 @@
     "grunt-contrib-clean": "^1.0.0",
     "grunt-contrib-internal": "^1.1.0",
     "grunt-contrib-jshint": "^1.0.0",
-    "grunt-contrib-nodeunit": "^1.0.0",
+    "grunt-contrib-nodeunit": "^1.0.0"
   },
   "peerDependencies": {
     "grunt": ">=0.4.0"

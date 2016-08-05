@@ -21,9 +21,11 @@ module.exports = function (grunt) {
     },
     sass: {
       compile: {
-        appDir: "test/",
-        target: "test/tmp/",
-        folders: ["fixtures/", "fixtures/partials/"]
+        files: {
+          'test/tmp/fixtures/banner.css': 'test/fixtures/banner.scss',
+          'test/tmp/fixtures/compile.css': 'test/fixtures/compile.scss',
+          'test/tmp/fixtures/imported.css': 'test/fixtures/imported.scss'
+        }
       }
     }
   });
