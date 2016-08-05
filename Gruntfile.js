@@ -33,6 +33,13 @@ module.exports = function (grunt) {
 					'test/tmp/sass/compile.css': 'test/sass/compile.sass',
 					'test/tmp/sass/imported.css': 'test/sass/imported.sass'
 				}
+			},
+			ignorePartials: {
+				cwd: 'test/scss/partials',
+				src: '*.scss',
+				dest: 'test/tmp',
+				expand: true,
+				ext: '.css'
 			}
 		}
 	});
