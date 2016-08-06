@@ -4,9 +4,6 @@ var Sass = require('sass.js');
 var fs = require('fs');
 var Q = require('q');
 
-Sass.options({
-	style: Sass.style.expanded
-});
 
 function fullPathToFileName(fullPath) {
 	return fullPath.split("/").reverse()[0];
@@ -23,7 +20,7 @@ module.exports = function (grunt) {
 			var src = file.src[0];
 			Sass.writeFile(src, fs.readFileSync(src, 'utf8'));
 			if (src[src.lastIndexOf("/")+1] !== '_') {
-				Sass.compileFile(src, function (result) {
+				Sass.compileFile(src, options, function (result) {
 					try {
 						var cssFullPath = file.dest;
 						var content = result.text;

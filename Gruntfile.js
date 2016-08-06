@@ -48,6 +48,14 @@ module.exports = function (grunt) {
 				files: {
 					'test/tmp/source-map.css': 'test/scss/sourcemap.scss'
 				}
+			},
+			precision: {
+				options: {
+					precision: 3
+				},
+				files: {
+					'test/tmp/precision.css': 'test/scss/precision.scss'
+				}
 			}
 		}
 	});
