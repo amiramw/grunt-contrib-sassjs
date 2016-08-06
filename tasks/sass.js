@@ -8,6 +8,10 @@ Sass.options({
 	style: Sass.style.expanded
 });
 
+function fullPathToFileName(fullPath) {
+	return fullPath.split("/").reverse()[0];
+}
+
 module.exports = function (grunt) {
 	grunt.registerMultiTask('sass', 'Compile Sass to CSS', function () {
 		var files = this.files;
@@ -21,15 +25,22 @@ module.exports = function (grunt) {
 			if (src[src.lastIndexOf("/")+1] !== '_') {
 				Sass.compileFile(src, function (result) {
 					try {
-						var cssFileName = file.dest;
-						grunt.verbose.writeln("Sass - Writing file " + cssFileName);
+						var cssFullPath = file.dest;
 						var content = result.text;
-						grunt.verbose.writeln("Compiled css: " + content.length + " characters");
-						grunt.file.write(cssFileName, content);
 						if (options.sourceMap && result.map) {
-							grunt.verbose.writeln("Sass - Writing file " + options.sourceMap);
-							grunt.file.write(options.sourceMap, result.map);
+							var cssFile = fullPathToFileName(cssFullPath);
+							content = "/*# sourceMappingURL=" + fullPathToFileName(options.sourceMap) + " */\n" + content;
+							grunt.file.write(options.sourceMap, JSON.stringify({
+								version: result.map.version,
+								mappings: result.map.mappings,
+								sources: result.map.sources.filter(function (source) {
+									return source !== "stdin";
+								}),
+								names: result.map.names,
+								file: cssFile
+							}));
 						}
+						grunt.file.write(cssFullPath, content);
 					} catch (err) {
 						grunt.log.error("Sass - error occurred: " + err);
 						deferred.reject();

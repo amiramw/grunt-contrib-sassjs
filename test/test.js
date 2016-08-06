@@ -25,5 +25,13 @@ exports.sass = {
 	ignorePartials: function (test) {
 		test.ok(!grunt.file.exists('test/tmp/_partial.css'), 'underscore partial files should be ignored');
 		test.done();
+	},
+	sourceMap: function (test) {
+		var css = grunt.file.read('test/tmp/source-map.css');
+		test.ok(/\/\*# sourceMappingURL=source\-map\.css\.map/.test(css), 'should include sourceMapppingUrl');
+
+		var map = grunt.file.read('test/tmp/source-map.css.map');
+		test.ok(/sourcemap\.scss/.test(map), 'should include the main file in sourceMap at least');
+		test.done();
 	}
 };

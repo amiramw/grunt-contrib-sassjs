@@ -40,6 +40,14 @@ module.exports = function (grunt) {
 				dest: 'test/tmp',
 				expand: true,
 				ext: '.css'
+			},
+			sourceMap: {
+				options: {
+					sourceMap: 'test/tmp/source-map.css.map'
+				},
+				files: {
+					'test/tmp/source-map.css': 'test/scss/sourcemap.scss'
+				}
 			}
 		}
 	});
