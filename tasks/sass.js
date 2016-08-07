@@ -11,8 +11,35 @@ function fullPathToFileName(fullPath) {
 Sass.options({
 	style: Sass.style.expanded
 });
-
 module.exports = function (grunt) {
+	Sass.importer(function(request, done) {
+		if (request.path) {
+			done();
+		} else if (request.resolved) {
+			var realPath = request.resolved.replace(/^\/sass\//, "");
+			if (grunt.file.exists(realPath)) {
+				done({
+					content: grunt.file.read(realPath)
+				});
+			} else {
+				var pathParts = realPath.split("/");
+				var fileName = pathParts.pop();
+				var pathWithSuffix = pathParts.concat(fileName + ".scss").join("/");
+				if (grunt.file.exists(pathWithSuffix)) {
+					done({
+						content: grunt.file.read(pathWithSuffix)
+					});
+				} else {
+					var partialPath = pathParts.concat("_" + fileName + ".scss").join("/");
+					done({
+						content: grunt.file.read(partialPath)
+					});
+				}
+			}
+		} else {
+			done();
+		}
+	});
 	grunt.registerMultiTask('sass', 'Compile Sass to CSS', function () {
 		var files = this.files, data = this.data, done = this.async();
 

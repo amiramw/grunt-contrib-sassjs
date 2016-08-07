@@ -20,11 +20,10 @@ module.exports = function (grunt) {
 			tests: ['test/test.js']
 		},
 		sass: {
-			compileScss: {
+			compileScssWithImport: {
 				files: {
 					'test/tmp/scss/banner.css': 'test/scss/banner.scss',
-					'test/tmp/scss/compile.css': 'test/scss/compile.scss',
-					'test/tmp/scss/imported.css': 'test/scss/imported.scss'
+					'test/tmp/scss/compile.css': 'test/scss/compile.scss'
 				}
 			},
 			compileSass: {
@@ -32,6 +31,11 @@ module.exports = function (grunt) {
 					'test/tmp/sass/banner.css': 'test/sass/banner.sass',
 					'test/tmp/sass/compile.css': 'test/sass/compile.sass',
 					'test/tmp/sass/imported.css': 'test/sass/imported.sass'
+				}
+			},
+			withPartial: {
+				files: {
+					'test/tmp/scss/withpartial.css': 'test/scss/withpartial.scss'
 				}
 			},
 			ignorePartials: {

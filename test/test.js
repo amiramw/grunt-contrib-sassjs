@@ -8,10 +8,9 @@ function readFile(file) {
 }
 
 exports.sass = {
-	compileScss: function (test) {
+	compileScssWithImport: function (test) {
 		test.equal(readFile('test/tmp/scss/banner.css'), readFile('test/expected/banner.css'), 'banner should compile SCSS to CSS');
 		test.equal(readFile('test/tmp/scss/compile.css'), readFile('test/expected/compile.css'), 'compile should compile SCSS to CSS');
-		test.equal(readFile('test/tmp/scss/imported.css'), readFile('test/expected/imported.css'), 'imported should compile SCSS to CSS');
 
 		test.done();
 	},
@@ -19,6 +18,11 @@ exports.sass = {
 		test.equal(readFile('test/tmp/sass/banner.css'), readFile('test/expected/banner.css'), 'banner should compile SCSS to CSS');
 		test.equal(readFile('test/tmp/sass/compile.css'), readFile('test/expected/compile.css'), 'compile should compile SCSS to CSS');
 		test.equal(readFile('test/tmp/sass/imported.css'), readFile('test/expected/imported.css'), 'imported should compile SCSS to CSS');
+
+		test.done();
+	},
+	withPartial: function (test) {
+		test.equal(readFile('test/tmp/scss/withpartial.css'), readFile('test/expected/withpartial.css'), 'withpartial should be as expected');
 
 		test.done();
 	},

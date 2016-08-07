@@ -12,8 +12,8 @@
     "test": "grunt test"
   },
   "dependencies": {
-    "sass.js": "^0.9.11",
-    "q": "^1.4.1"
+    "q": "^1.4.1",
+    "sass.js": "^0.9.11"
   },
   "devDependencies": {
     "grunt": "^1.0.0",
