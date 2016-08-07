@@ -4,7 +4,7 @@
 
 > Compile Sass to CSS using [sass.js](https://github.com/medialize/sass.js)
 
-This task uses sass.js, which is a Sass compiler in JavaScript. It's not as fast as the C implementation [node-sass](https://github.com/andrew/node-sass) but it is completely stand alone and run on JavaScript only.
+This task uses sass.js, which is a Sass compiler written in JavaScript. It's not as fast as the C implementation [node-sass](https://github.com/andrew/node-sass) but it is completely stand alone and doesn't require downloading binaries or installing anything.
 
 
 ## Install
