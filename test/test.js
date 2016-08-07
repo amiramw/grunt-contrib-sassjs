@@ -3,8 +3,7 @@
 var grunt = require('grunt');
 
 function readFile(file) {
-	var contents = grunt.file.read(file);
-	return process.platform === 'win32' ? contents.replace(/\r\n/g, '\n') : contents;
+	return grunt.file.read(file);
 }
 
 exports.sass = {
