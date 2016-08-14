@@ -20,6 +20,7 @@ $ npm install --save-dev grunt-contrib-sassjs
 grunt.initConfig({
 	sass: {
 		dist: {
+			sourceMap: true,
 			files: {
 				'main.css': 'main.scss'
 			}
