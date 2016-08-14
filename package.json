@@ -1,7 +1,7 @@
 {
   "name": "grunt-contrib-sassjs",
   "description": "Compile Sass to CSS using sass.js",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "repository": "amiramw/grunt-contrib-sassjs",
   "license": "MIT",
   "engines": {
