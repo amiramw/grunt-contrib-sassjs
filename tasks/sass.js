@@ -82,7 +82,7 @@ module.exports = function (grunt) {
 									sources: result.map.sources.filter(function (source) {
 										return source !== "stdin";
 									}).map(function (source) {
-										return PATH.relative("sass/" + PATH.dirname(src), source).replace("\\", "/");
+										return PATH.relative("sass/" + PATH.dirname(src), source).replace(/\\/g, "/");
 									}),
 									names: result.map.names,
 									file: cssFile
