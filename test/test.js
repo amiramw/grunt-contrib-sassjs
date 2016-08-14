@@ -22,6 +22,7 @@ exports.sass = {
 	},
 	withPartial: function (test) {
 		test.equal(readFile('test/tmp/scss/withpartial.css'), readFile('test/expected/withpartial.css'), 'withpartial should be as expected');
+		test.equal(readFile('test/tmp/scss/withpartial.css.map'), readFile('test/expected/withpartial.css.map'), 'withpartial should be as expected');
 
 		test.done();
 	},

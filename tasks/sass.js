@@ -44,6 +44,7 @@ module.exports = function (grunt) {
 				}
 				if (grunt.file.exists(path)) {
 					return {
+						path: request.resolved.substr(0, request.resolved.lastIndexOf('/') + 1) + PATH.basename(path),
 						content: grunt.file.read(path)
 					};
 				}
@@ -74,12 +75,14 @@ module.exports = function (grunt) {
 							var content = result.text;
 							if (data.sourceMap && result.map) {
 								var cssFile = PATH.basename(cssFullPath);
-								content = "/*# sourceMappingURL=" + PATH.basename(data.sourceMap) + " */\n" + content;
-								grunt.file.write(data.sourceMap, JSON.stringify({
+								content = "/*# sourceMappingURL=" + cssFile + ".map */\n" + content;
+								grunt.file.write(cssFullPath + ".map", JSON.stringify({
 									version: result.map.version,
 									mappings: result.map.mappings,
 									sources: result.map.sources.filter(function (source) {
 										return source !== "stdin";
+									}).map(function (source) {
+										return PATH.relative("sass/" + PATH.dirname(src), source).replace("\\", "/");
 									}),
 									names: result.map.names,
 									file: cssFile

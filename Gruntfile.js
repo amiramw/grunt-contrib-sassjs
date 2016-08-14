@@ -34,6 +34,7 @@ module.exports = function (grunt) {
 				}
 			},
 			withPartial: {
+				sourceMap: true,
 				files: {
 					'test/tmp/scss/withpartial.css': 'test/scss/withpartial.scss'
 				}
@@ -46,7 +47,7 @@ module.exports = function (grunt) {
 				ext: '.css'
 			},
 			sourceMap: {
-				sourceMap: 'test/tmp/source-map.css.map',
+				sourceMap: true,
 				files: {
 					'test/tmp/source-map.css': 'test/scss/sourcemap.scss'
 				}
