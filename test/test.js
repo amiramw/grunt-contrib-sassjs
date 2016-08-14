@@ -2,28 +2,24 @@
 
 var grunt = require('grunt');
 
-function readFile(file) {
-	return grunt.file.read(file);
-}
-
 exports.sass = {
 	compileScssWithImport: function (test) {
-		test.equal(readFile('test/tmp/scss/banner.css'), readFile('test/expected/banner.css'), 'banner should compile SCSS to CSS');
-		test.equal(readFile('test/tmp/scss/compile.css'), readFile('test/expected/compile.css'), 'compile should compile SCSS to CSS');
-
+		test.equal(grunt.file.read('test/tmp/scss/banner.css'), grunt.file.read('test/expected/banner.css'), 'banner should compile SCSS to CSS');
+		test.equal(grunt.file.read('test/tmp/scss/compile.css'), grunt.file.read('test/expected/compile.css'), 'compile should compile SCSS to CSS');
 		test.done();
 	},
 	compileSass: function (test) {
-		test.equal(readFile('test/tmp/sass/banner.css'), readFile('test/expected/banner.css'), 'banner should compile SCSS to CSS');
-		test.equal(readFile('test/tmp/sass/compile.css'), readFile('test/expected/compile.css'), 'compile should compile SCSS to CSS');
-		test.equal(readFile('test/tmp/sass/imported.css'), readFile('test/expected/imported.css'), 'imported should compile SCSS to CSS');
-
+		test.equal(grunt.file.read('test/tmp/sass/banner.css'), grunt.file.read('test/expected/banner.css'), 'banner should compile SCSS to CSS');
+		test.equal(grunt.file.read('test/tmp/sass/compile.css'), grunt.file.read('test/expected/compile.css'), 'compile should compile SCSS to CSS');
+		test.equal(grunt.file.read('test/tmp/sass/imported.css'), grunt.file.read('test/expected/imported.css'), 'imported should compile SCSS to CSS');
 		test.done();
 	},
 	withPartial: function (test) {
-		test.equal(readFile('test/tmp/scss/withpartial.css'), readFile('test/expected/withpartial.css'), 'withpartial should be as expected');
-		test.equal(readFile('test/tmp/scss/withpartial.css.map'), readFile('test/expected/withpartial.css.map'), 'withpartial should be as expected');
-
+		test.equal(grunt.file.read('test/tmp/scss/withpartial.css'), grunt.file.read('test/expected/withpartial.css'), 'withpartial should be as expected');
+		var cssMap = grunt.file.readJSON('test/tmp/scss/withpartial.css.map');
+		test.deepEqual(cssMap.sources, ["withpartial.scss","partials/_partial.scss"]);
+		test.equal(cssMap.file, "withpartial.css");
+		test.ok(cssMap.sourcesContent);
 		test.done();
 	},
 	ignorePartials: function (test) {
@@ -32,7 +28,7 @@ exports.sass = {
 	},
 	sourceMap: function (test) {
 		var css = grunt.file.read('test/tmp/source-map.css');
-		test.ok(/\/\*# sourceMappingURL=source\-map\.css\.map/.test(css), 'should include sourceMapppingUrl');
+		test.ok(/\/\*# sourceMappingURL=source\-map\.css\.map/.test(css), 'should include sourceMappingUrl');
 		var map = grunt.file.read('test/tmp/source-map.css.map');
 		test.ok(/sourcemap\.scss/.test(map), 'should include the main file in sourceMap at least');
 

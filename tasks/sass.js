@@ -4,31 +4,6 @@ var Sass = require('sass.js');
 var Q = require('q');
 var PATH = require('path');
 
-// copied from https://github.com/medialize/sass.js/blob/master/src/sass.importer.js#L61-L82
-// should consider expose and reuse
-function _pathVariations(path) {
-	// [importer,include_path] this is where we would add the ability to
-	// examine the include_path (if we ever use that in Sass.js)
-	path = PATH.normalize(path);
-	var directory = PATH.dirname(path);
-	var basename = PATH.basename(path);
-	var extensions = ['.scss', '.sass', '.css'];
-	// basically what is done by resolve_and_load() in file.cpp
-	// Resolution order for ambiguous imports:
-	return [
-		// (1) filename as given
-		path,
-		// (2) underscore + given
-		PATH.resolve(directory, '_' + basename)
-	].concat(extensions.map(function (extension) {
-		// (3) underscore + given + extension
-		return PATH.resolve(directory, '_' + basename + extension);
-	})).concat(extensions.map(function (extension) {
-		// (4) given + extension
-		return PATH.resolve(directory, basename + extension);
-	}));
-}
-
 Sass.options({
 	style: Sass.style.expanded
 });
@@ -38,7 +13,7 @@ module.exports = function (grunt) {
 			done();
 		} else if (request.resolved) {
 			var realPath = request.resolved.replace(/^\/sass\//, "");
-			done(_pathVariations(realPath).reduce(function (found, path) {
+			done(Sass.getPathVariations(realPath).reduce(function (found, path) {
 				if (found) {
 					return found;
 				}
@@ -76,17 +51,12 @@ module.exports = function (grunt) {
 							if (data.sourceMap && result.map) {
 								var cssFile = PATH.basename(cssFullPath);
 								content = "/*# sourceMappingURL=" + cssFile + ".map */\n" + content;
-								grunt.file.write(cssFullPath + ".map", JSON.stringify({
-									version: result.map.version,
-									mappings: result.map.mappings,
-									sources: result.map.sources.filter(function (source) {
-										return source !== "stdin";
-									}).map(function (source) {
-										return PATH.relative("sass/" + PATH.dirname(src), source).replace(/\\/g, "/");
-									}),
-									names: result.map.names,
-									file: cssFile
-								}));
+								var rootDirectory = "sass/" + PATH.dirname(src);
+								result.map.file = cssFile;
+								result.map.sources = result.map.sources.map(function (source) {
+									return PATH.relative(rootDirectory, source).replace(/\\/g, "/");
+								});
+								grunt.file.write(cssFullPath + ".map", JSON.stringify(result.map));
 							}
 							grunt.file.write(cssFullPath, content);
 						} catch (err) {
