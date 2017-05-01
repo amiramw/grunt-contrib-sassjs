@@ -17,7 +17,7 @@ module.exports = function (grunt) {
 				if (found) {
 					return found;
 				}
-				if (grunt.file.exists(path)) {
+				if (grunt.file.exists(path) && !grunt.file.isDir(path)) {
 					return {
 						path: request.resolved.substr(0, request.resolved.lastIndexOf('/') + 1) + PATH.basename(path),
 						content: grunt.file.read(path)
